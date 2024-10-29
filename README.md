@@ -13,5 +13,5 @@ A simple tool that calculates the estimated read time of a web page. Built with 
 2. Run the program:
     ```
     cd readtime
-    deno run --allow-net main.ts
+    deno run --allow-net src/main.ts
     ```
