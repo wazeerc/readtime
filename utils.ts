@@ -3,6 +3,8 @@ import { DOMParser } from "jsr:@b-fuze/deno-dom";
 
 type TUrl = `https://${string}` | string | "";
 
+const AVG_WORDS_PER_MINUTES: number = 200 as const;
+
 const welcomeMsg = (): void => {
   console.log(`📖 Find out how long it will take to read an article!\n`);
 };
@@ -46,9 +48,8 @@ const sanitizeContent = (content: string): string => {
 };
 
 const calculateReadTime = (content: string): number => {
-  const wordsPerMinute = 250;
   const words = content.split(" ").length;
-  return Math.ceil(words / wordsPerMinute);
+  return Math.ceil(words / AVG_WORDS_PER_MINUTES);
 };
 
 export {
