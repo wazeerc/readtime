@@ -8,13 +8,14 @@ const welcomeMsg = (): void => {
 };
 
 const promptUrl = (): TUrl => {
-  const input = prompt("🌐 Please enter a URL:");
+  let input = prompt("🌐 Please enter the URL:");
 
   if (!input) throw new Error("Invalid URL");
 
-  if (!input.startsWith("https")) return `https://${input}`;
-
-  if (input.charAt(4) !== "s") throw new Error("❗URL Not Secure");
+  if (!input.startsWith("https://")) {
+    input = input.replace(/^http:\/\//, "https://");
+    if (!input.startsWith("https://")) input = `https://${input}`;
+  }
 
   return input;
 };
