@@ -19,7 +19,7 @@ const main = async () => {
     const sanitizedContent = sanitizeContent(parsedContent);
 
     const readTime = calculateReadTime(sanitizedContent);
-    console.log(`\n⏱️ Read Time: ${readTime} minute(s).`);
+    console.log(`\n⏱️  Read Time: ${readTime} minute(s).`);
   } catch (error) {
     console.error(error);
   }
