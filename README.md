@@ -1,6 +1,6 @@
 # **ReadTime Estimator**
 
-A simple tool that calculates the estimated read time of a web page. Built with Deno and TypeScript.
+A simple tool that calculates the estimated read time of a web page. Built with Deno 2 and TypeScript.
 
 ## **Getting Started**
 
