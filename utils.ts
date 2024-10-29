@@ -23,8 +23,12 @@ const promptUrl = (): TUrl => {
 };
 
 const fetchPageContent = async (url: TUrl): Promise<string> => {
-  const response = await fetch(url);
-  return response.text();
+  try {
+    const response = await fetch(url);
+    return response.text();
+  } catch (error) {
+    throw new Error("❌ Failed to fetch page content");
+  }
 };
 
 const parsePageContent = (pageContent: string): string => {
