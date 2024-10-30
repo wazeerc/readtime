@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { assertEquals, assertThrows } from "https://deno.land/std@0.106.0/testing/asserts.ts";
-import { welcomeMsg, promptUrl } from "./utils.ts";
+import { welcomeMsg, promptUrl } from "../src/utils.ts";
 
 Deno.test("welcomeMsg function tests", () => {
   Deno.test("welcomeMsg should log the correct message", () => {
