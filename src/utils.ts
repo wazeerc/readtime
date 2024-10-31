@@ -25,42 +25,31 @@ const promptUrl = (): TUrl => {
 const fetchPageContent = async (url: TUrl): Promise<string> => {
   try {
     const response = await fetch(url);
-    return response.text();
+    if (!response.ok) {
+      throw new Error(`❌ Failed to fetch page content`);
+    }
+    return await response.text();
   } catch (error) {
-    throw new Error("❌ Failed to fetch page content");
+    throw new Error(`❌ Failed to fetch page content`);
   }
 };
 
 const parsePageContent = (pageContent: string): string => {
   const doc = new DOMParser().parseFromString(pageContent, "text/html");
-  if (!doc) throw new Error("❌ Failed to parse document");
 
-  const main = doc.querySelector("main");
+  const main = doc?.querySelector("main");
   if (main) return main.textContent;
 
-  const article = doc.querySelector("article");
+  const article = doc?.querySelector("article");
   if (article) return article.textContent;
 
-  return doc.body.textContent;
+  return doc?.body.textContent.trim();
 };
 
-const sanitizeContent = (content: string): string => {
-  content = content.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
-  content = content.replace(/ on\w+="[^"]*"/gi, "");
-  content = content.replace(/javascript:[^"]*/gi, "");
-  return content;
+const calculateReadTime = (parsedPageContent: string): number => {
+  if (!parsedPageContent || parsePageContent.length === 0) return 0;
+  const numberOfWordsInPage = parsedPageContent.split(" ").length;
+  return Math.ceil(numberOfWordsInPage / AVG_WORDS_PER_MINUTES);
 };
 
-const calculateReadTime = (content: string): number => {
-  const words = content.split(" ").length;
-  return Math.ceil(words / AVG_WORDS_PER_MINUTES);
-};
-
-export {
-  welcomeMsg,
-  promptUrl,
-  fetchPageContent,
-  parsePageContent,
-  sanitizeContent,
-  calculateReadTime,
-};
+export { welcomeMsg, promptUrl, fetchPageContent, parsePageContent, calculateReadTime };

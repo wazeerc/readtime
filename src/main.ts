@@ -1,24 +1,16 @@
 import * as utils from "./utils.ts";
 
-const {
-  welcomeMsg,
-  promptUrl,
-  fetchPageContent,
-  parsePageContent,
-  sanitizeContent,
-  calculateReadTime,
-} = utils;
+const { welcomeMsg, promptUrl, fetchPageContent, parsePageContent, calculateReadTime } = utils;
 
-const main = async () => {
+export const main = async () => {
   try {
     welcomeMsg();
     const targetUrl = promptUrl();
 
     const pageContent = await fetchPageContent(targetUrl);
     const parsedContent = parsePageContent(pageContent);
-    const sanitizedContent = sanitizeContent(parsedContent);
 
-    const readTime = calculateReadTime(sanitizedContent);
+    const readTime = calculateReadTime(parsedContent);
     console.log(`\n⏱️  Read Time: ${readTime} minute(s).`);
   } catch (error) {
     console.error(error);
