@@ -23,7 +23,7 @@ Deno.test("welcomeMsg should log the correct message", () => {
 // Mock prompt function
 const originalPrompt = globalThis.prompt;
 
-Deno.test("should throw an error if input is empty", () => {
+Deno.test("promptUrl should throw an error if input is empty", () => {
   globalThis.prompt = () => "";
 
   assertThrows(
@@ -35,21 +35,21 @@ Deno.test("should throw an error if input is empty", () => {
   );
 });
 
-Deno.test("should return a secure URL if input does not start with https", () => {
+Deno.test("promptUrl should return a secure URL if input does not start with https", () => {
   globalThis.prompt = () => "example.com";
 
   const result = promptUrl();
   assertEquals(result, "https://example.com");
 });
 
-Deno.test("should return a secure URL if input does start with http", () => {
+Deno.test("promptUrl should return a secure URL if input does start with http", () => {
   globalThis.prompt = () => "http://example.com";
 
   const result = promptUrl();
   assertEquals(result, "https://example.com");
 });
 
-Deno.test("should return the input if it is a secure URL", () => {
+Deno.test("promptUrl should return the input if it is a secure URL", () => {
   globalThis.prompt = () => "https://example.com";
 
   const result = promptUrl();
