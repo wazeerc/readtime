@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "lib": ["deno.ns", "es2024"],
+    "types": ["deno.ns"]
+  }
+}
