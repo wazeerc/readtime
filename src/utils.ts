@@ -1,18 +1,17 @@
 // @ts-ignore
 import { DOMParser } from "jsr:@b-fuze/deno-dom";
+import { AVG_WORDS_PER_MINUTES, TEXT_STRINGS } from "./constants.ts";
 
 type TUrl = `https://${string}` | string | "";
 
-const AVG_WORDS_PER_MINUTES: number = 200 as const;
-
 const welcomeMsg = (): void => {
-  console.log(`📖 Find out how long it will take to read an article!\n`);
+  console.log(TEXT_STRINGS.WELCOME_MSG);
 };
 
 const promptUrl = (): TUrl => {
-  let input = prompt("🌐 Please enter the URL:");
+  let input = prompt(TEXT_STRINGS.PROMPT_URL);
 
-  if (!input) throw new Error("Invalid URL");
+  if (!input) throw new Error(TEXT_STRINGS.INVALID_URL);
 
   if (!input.startsWith("https://")) {
     input = input.replace(/^http:\/\//, "https://");
@@ -26,11 +25,11 @@ const fetchPageContent = async (url: TUrl): Promise<string> => {
   try {
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`❌ Failed to fetch page content`);
+      throw new Error(TEXT_STRINGS.FAILED_FETCH_PAGE_CONTENT);
     }
     return await response.text();
   } catch (error) {
-    throw new Error(`❌ Failed to fetch page content`);
+    throw new Error(TEXT_STRINGS.FAILED_FETCH_PAGE_CONTENT);
   }
 };
 
