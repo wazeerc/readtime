@@ -10,3 +10,13 @@ Deno.test("main function should display the correct read time", async () => {
 
   assertEquals(readTime, expectedReadTime);
 });
+
+Deno.test("main function should prompt user to exit after displaying read time", async () => {
+  let output = "";
+  console.log = msg => (output = msg);
+
+  await main("https://google.com/");
+  const expectedOutput = "Press any key to exit...";
+
+  assertEquals(output, expectedOutput);
+});
