@@ -3,7 +3,8 @@
     "dev": "deno run --watch src/main.ts",
     "start": "deno run --allow-net src/main.ts",
     "test": "deno test --allow-net --allow-read --unstable",
-    "test:coverage": "deno run test --coverage=cov_profile && deno coverage cov_profile"
+    "test:coverage": "deno run test --coverage=cov_profile && deno coverage cov_profile",
+    "compile": "deno compile --allow-net -o readtime.exe src/main.ts"
   },
   "imports": {
     "@b-fuze/deno-dom": "jsr:@b-fuze/deno-dom@^0.1.48",
