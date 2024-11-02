@@ -16,6 +16,7 @@ export const main = async (targetUrl?: string) => {
 
     const readTime = calculateReadTime(parsedContent);
     console.log(TEXT_STRINGS.READ_TIME.replace("{readTime}", readTime.toString()));
+    console.log(TEXT_STRINGS.EXIT_MSG);
     return readTime;
   } catch (error) {
     console.error(error);
@@ -23,3 +24,7 @@ export const main = async (targetUrl?: string) => {
 };
 
 import.meta.main && main();
+
+if (import.meta.main) {
+  await new Promise(resolve => Deno.stdin.read(new Uint8Array(1)).then(resolve));
+}
