@@ -1,7 +1,7 @@
 //@ts-nocheck
 /// <reference lib="deno.ns" />
 import * as utils from "./utils.ts";
-import { TEXT_STRINGS } from "./constants.ts";
+import { TEXT_STRINGS } from "../src/constants.ts";
 
 const { welcomeMsg, promptUrl, fetchPageContent, parsePageContent, calculateReadTime } = utils;
 
@@ -23,8 +23,7 @@ export const main = async (targetUrl?: string) => {
   }
 };
 
-import.meta.main && main();
-
 if (import.meta.main) {
+  main();
   await new Promise(resolve => Deno.stdin.read(new Uint8Array(1)).then(resolve));
 }

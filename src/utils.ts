@@ -2,7 +2,7 @@
 import { DOMParser } from "jsr:@b-fuze/deno-dom";
 import { AVG_WORDS_PER_MINUTES, TEXT_STRINGS } from "./constants.ts";
 
-type TUrl = `https://${string}` | string | "";
+export type TUrl = `https://${string}` | string | "";
 
 const welcomeMsg = (): void => {
   console.log(TEXT_STRINGS.WELCOME_MSG);

@@ -1,6 +1,7 @@
 //@ts-nocheck
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 import { main } from "../src/main.ts";
+import { TEXT_STRINGS } from "../src/constants.ts";
 
 Deno.test("main function should display the correct read time", async () => {
   const testUrl = "https://google.com/";
@@ -16,7 +17,7 @@ Deno.test("main function should prompt user to exit after displaying read time",
   console.log = msg => (output = msg);
 
   await main("https://google.com/");
-  const expectedOutput = "Press any key to exit...";
+  const expectedOutput = TEXT_STRINGS.EXIT_MSG;
 
   assertEquals(output, expectedOutput);
 });

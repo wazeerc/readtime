@@ -1,12 +1,16 @@
 // @ts-nocheck
 import { assertEquals, assertThrows } from "https://deno.land/std@0.106.0/testing/asserts.ts";
 import {
+  TUrl,
   welcomeMsg,
   promptUrl,
   fetchPageContent,
   parsePageContent,
   calculateReadTime,
 } from "../src/utils.ts";
+import { TEXT_STRINGS } from "../src/constants.ts";
+
+const fakeUrl: TUrl = "https://example.com" as string;
 
 //#region Tests: welcomeMsg
 Deno.test("welcomeMsg should log the correct message", () => {
@@ -15,7 +19,7 @@ Deno.test("welcomeMsg should log the correct message", () => {
 
   welcomeMsg();
 
-  assertEquals(output, "📖 Find out how long it will take to read an article!\n");
+  assertEquals(output, TEXT_STRINGS.WELCOME_MSG);
 });
 //#endregion
 
@@ -39,21 +43,21 @@ Deno.test("promptUrl should return a secure URL if input does not start with htt
   globalThis.prompt = () => "example.com";
 
   const result = promptUrl();
-  assertEquals(result, "https://example.com");
+  assertEquals(result, fakeUrl);
 });
 
 Deno.test("promptUrl should return a secure URL if input does start with http", () => {
   globalThis.prompt = () => "http://example.com";
 
   const result = promptUrl();
-  assertEquals(result, "https://example.com");
+  assertEquals(result, fakeUrl);
 });
 
 Deno.test("promptUrl should return the input if it is a secure URL", () => {
-  globalThis.prompt = () => "https://example.com";
+  globalThis.prompt = () => fakeUrl;
 
   const result = promptUrl();
-  assertEquals(result, "https://example.com");
+  assertEquals(result, fakeUrl);
 });
 
 // Restore prompt function
@@ -64,7 +68,7 @@ globalThis.prompt = originalPrompt;
 Deno.test(
   "fetchPageContent should make a fetch request using the provided URL and return the correct text content",
   async () => {
-    const testUrl = "https://example.com";
+    const testUrl = fakeUrl;
     const testUrlTextSample = "Example Domain";
 
     const text = await fetchPageContent(testUrl);
@@ -80,7 +84,7 @@ Deno.test("fetchPageContent should throw an error when given an invalid URL", as
     await fetchPageContent(invalidUrl);
     throw new Error("Expected error was not thrown");
   } catch (error) {
-    assertEquals(error.message, "❌ Failed to fetch page content");
+    assertEquals(error.message, TEXT_STRINGS.FAILED_FETCH_PAGE_CONTENT);
   }
 });
 
@@ -97,10 +101,10 @@ Deno.test(
       });
 
     try {
-      await fetchPageContent("https://example.com");
+      await fetchPageContent(fakeUrl);
       throw new Error("Expected error was not thrown");
     } catch (error) {
-      assertEquals(error.message, "❌ Failed to fetch page content");
+      assertEquals(error.message, TEXT_STRINGS.FAILED_FETCH_PAGE_CONTENT);
     }
 
     globalThis.fetch = originalFetch;
