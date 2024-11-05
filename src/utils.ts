@@ -1,4 +1,3 @@
-// @ts-ignore
 import { DOMParser } from "jsr:@b-fuze/deno-dom";
 import { AVG_WORDS_PER_MINUTES, TEXT_STRINGS } from "./constants.ts";
 
@@ -28,7 +27,7 @@ const fetchPageContent = async (url: TUrl): Promise<string> => {
       throw new Error(TEXT_STRINGS.FAILED_FETCH_PAGE_CONTENT);
     }
     return await response.text();
-  } catch (error) {
+  } catch (_error) {
     throw new Error(TEXT_STRINGS.FAILED_FETCH_PAGE_CONTENT);
   }
 };
@@ -51,4 +50,10 @@ const calculateReadTime = (parsedPageContent: string): number => {
   return Math.ceil(numberOfWordsInPage / AVG_WORDS_PER_MINUTES);
 };
 
-export { welcomeMsg, promptUrl, fetchPageContent, parsePageContent, calculateReadTime };
+export {
+  welcomeMsg,
+  promptUrl,
+  fetchPageContent,
+  parsePageContent,
+  calculateReadTime,
+};
