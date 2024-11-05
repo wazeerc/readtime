@@ -94,7 +94,11 @@ Deno.test(
       await fetchPageContent(invalidUrl);
       throw new Error("Expected error was not thrown");
     } catch (error) {
-      assertEquals(error.message, TEXT_STRINGS.FAILED_FETCH_PAGE_CONTENT);
+      if (error instanceof Error) {
+        assertEquals(error.message, TEXT_STRINGS.FAILED_FETCH_PAGE_CONTENT);
+      } else {
+        throw error;
+      }
     }
   }
 );
@@ -105,17 +109,17 @@ Deno.test(
     // Mock fetch to return a non-ok response
     const originalFetch = globalThis.fetch;
     globalThis.fetch = () =>
-      Promise.resolve({
-        ok: false,
-        status: 404,
-        text: () => Promise.resolve("Not Found"),
-      });
+      Promise.resolve(new Response("Not Found", { status: 404 }));
 
     try {
       await fetchPageContent(fakeUrl);
       throw new Error("Expected error was not thrown");
     } catch (error) {
-      assertEquals(error.message, TEXT_STRINGS.FAILED_FETCH_PAGE_CONTENT);
+      if (error instanceof Error) {
+        assertEquals(error.message, TEXT_STRINGS.FAILED_FETCH_PAGE_CONTENT);
+      } else {
+        throw error;
+      }
     }
 
     globalThis.fetch = originalFetch;
