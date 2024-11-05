@@ -18,7 +18,7 @@ A simple tool that calculates the estimated read time of a web page. Built with 
    ```
    cd readtime && deno run start
    ```
-   or to generate a standalone executable or `.exe`
+   or to generate a standalone `.exe`
    ```
    deno run compile
    ```
