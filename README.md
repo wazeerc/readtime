@@ -12,7 +12,7 @@ A simple tool that calculates the estimated read time of a web page. Built with 
 
 ### **Installation**
 
-1. Clone the repository:
+1. Clone the repository
 
 2. Run the program:
    ```
