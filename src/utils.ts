@@ -1,3 +1,4 @@
+//@ts-nocheck: To get rid of Deno related errors
 import { DOMParser } from "jsr:@b-fuze/deno-dom";
 import { AVG_WORDS_PER_MINUTES, TEXT_STRINGS } from "./constants.ts";
 
@@ -50,10 +51,4 @@ const calculateReadTime = (parsedPageContent: string): number => {
   return Math.ceil(numberOfWordsInPage / AVG_WORDS_PER_MINUTES);
 };
 
-export {
-  welcomeMsg,
-  promptUrl,
-  fetchPageContent,
-  parsePageContent,
-  calculateReadTime,
-};
+export { welcomeMsg, promptUrl, fetchPageContent, parsePageContent, calculateReadTime };

@@ -1,7 +1,5 @@
-import {
-  assertEquals,
-  assertThrows,
-} from "https://deno.land/std@0.106.0/testing/asserts.ts";
+//@ts-nocheck: To get rid of Deno related errors
+import { assertEquals, assertThrows } from "https://deno.land/std@0.106.0/testing/asserts.ts";
 import {
   TUrl,
   welcomeMsg,
@@ -17,7 +15,7 @@ const fakeUrl: TUrl = "https://example.com" as string;
 //#region Tests: welcomeMsg
 Deno.test("welcomeMsg should log the correct message", () => {
   let output = "";
-  console.log = (msg) => (output = msg);
+  console.log = msg => (output = msg);
 
   welcomeMsg();
 
@@ -37,29 +35,23 @@ Deno.test("promptUrl should throw an error if input is empty", () => {
       promptUrl();
     },
     Error,
-    "Invalid URL"
+    "Invalid URL",
   );
 });
 
-Deno.test(
-  "promptUrl should return a secure URL if input does not start with https",
-  () => {
-    globalThis.prompt = () => "example.com";
+Deno.test("promptUrl should return a secure URL if input does not start with https", () => {
+  globalThis.prompt = () => "example.com";
 
-    const result = promptUrl();
-    assertEquals(result, fakeUrl);
-  }
-);
+  const result = promptUrl();
+  assertEquals(result, fakeUrl);
+});
 
-Deno.test(
-  "promptUrl should return a secure URL if input does start with http",
-  () => {
-    globalThis.prompt = () => "http://example.com";
+Deno.test("promptUrl should return a secure URL if input does start with http", () => {
+  globalThis.prompt = () => "http://example.com";
 
-    const result = promptUrl();
-    assertEquals(result, fakeUrl);
-  }
-);
+  const result = promptUrl();
+  assertEquals(result, fakeUrl);
+});
 
 Deno.test("promptUrl should return the input if it is a secure URL", () => {
   globalThis.prompt = () => fakeUrl;
@@ -82,34 +74,30 @@ Deno.test(
     const text = await fetchPageContent(testUrl);
 
     assertEquals(text.includes(testUrlTextSample), true);
-  }
+  },
 );
 
-Deno.test(
-  "fetchPageContent should throw an error when given an invalid URL",
-  async () => {
-    const invalidUrl = "https://example.fake";
+Deno.test("fetchPageContent should throw an error when given an invalid URL", async () => {
+  const invalidUrl = "https://example.fake";
 
-    try {
-      await fetchPageContent(invalidUrl);
-      throw new Error("Expected error was not thrown");
-    } catch (error) {
-      if (error instanceof Error) {
-        assertEquals(error.message, TEXT_STRINGS.FAILED_FETCH_PAGE_CONTENT);
-      } else {
-        throw error;
-      }
+  try {
+    await fetchPageContent(invalidUrl);
+    throw new Error("Expected error was not thrown");
+  } catch (error) {
+    if (error instanceof Error) {
+      assertEquals(error.message, TEXT_STRINGS.FAILED_FETCH_PAGE_CONTENT);
+    } else {
+      throw error;
     }
   }
-);
+});
 
 Deno.test(
   "fetchPageContent should throw an error when fetch returns a non-ok response",
   async () => {
     // Mock fetch to return a non-ok response
     const originalFetch = globalThis.fetch;
-    globalThis.fetch = () =>
-      Promise.resolve(new Response("Not Found", { status: 404 }));
+    globalThis.fetch = () => Promise.resolve(new Response("Not Found", { status: 404 }));
 
     try {
       await fetchPageContent(fakeUrl);
@@ -123,7 +111,7 @@ Deno.test(
     }
 
     globalThis.fetch = originalFetch;
-  }
+  },
 );
 //#endregion
 
@@ -167,7 +155,7 @@ Deno.test(
 
     const result = parsePageContent(pageContent);
     assertEquals(result, "Body content");
-  }
+  },
 );
 //#endregion
 
@@ -179,13 +167,10 @@ Deno.test("calculateReadTime should return 0 for empty content", () => {
   assertEquals(result, 0);
 });
 
-Deno.test(
-  "calculateReadTime should return 1 for content with exactly 200 words",
-  () => {
-    const parsedPageContent = "word ".repeat(200).trim();
+Deno.test("calculateReadTime should return 1 for content with exactly 200 words", () => {
+  const parsedPageContent = "word ".repeat(200).trim();
 
-    const result = calculateReadTime(parsedPageContent);
-    assertEquals(result, 1);
-  }
-);
+  const result = calculateReadTime(parsedPageContent);
+  assertEquals(result, 1);
+});
 //#endregion
