@@ -7,7 +7,7 @@ export const TEXT_STRINGS: TTextStrings = {
   PROMPT_URL: "🌐 Please enter the URL:",
   INVALID_URL: "❌ Invalid URL",
   FAILED_FETCH_PAGE_CONTENT: "❌ Failed to fetch page content",
-  READ_TIME: `\n⏱️  Read Time: {readTime} minute(s).\n`,
+  READ_TIME: `\n⏱️  Read Time: {readTime} minute(s) approx.\n`,
   EXIT_MSG: "Press any key(s) to exit...",
 };
 
