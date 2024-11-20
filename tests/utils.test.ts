@@ -35,25 +35,23 @@ Deno.test("promptUrl should throw an error if input is empty", () => {
       promptUrl();
     },
     Error,
-    "Invalid URL",
+    TEXT_STRINGS.INVALID_URL,
   );
 });
 
-Deno.test("promptUrl should return a secure URL if input does not start with https", () => {
-  globalThis.prompt = () => "example.com";
-
-  const result = promptUrl();
-  assertEquals(result, fakeUrl);
-});
-
-Deno.test("promptUrl should return a secure URL if input does start with http", () => {
+Deno.test("promptUrl should throw an error if input is not secure", () => {
   globalThis.prompt = () => "http://example.com";
 
-  const result = promptUrl();
-  assertEquals(result, fakeUrl);
+  assertThrows(
+    () => {
+      promptUrl();
+    },
+    Error,
+    TEXT_STRINGS.INSECURE_URL,
+  );
 });
 
-Deno.test("promptUrl should return the input if it is a secure URL", () => {
+Deno.test("promptUrl should return the input URL", () => {
   globalThis.prompt = () => fakeUrl;
 
   const result = promptUrl();
