@@ -12,11 +12,7 @@ const promptUrl = (): TUrl => {
   let input = prompt(TEXT_STRINGS.PROMPT_URL);
 
   if (!input) throw new Error(TEXT_STRINGS.INVALID_URL);
-
-  if (!input.startsWith("https://")) {
-    input = input.replace(/^http:\/\//, "https://");
-    if (!input.startsWith("https://")) input = `https://${input}`;
-  }
+  if (!input.startsWith("https://")) throw new Error(TEXT_STRINGS.INSECURE_URL);
 
   return input;
 };
