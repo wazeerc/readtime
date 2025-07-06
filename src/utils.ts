@@ -9,7 +9,7 @@ const welcomeMsg = (): void => {
 };
 
 const promptUrl = (): TUrl => {
-  let input = prompt(TEXT_STRINGS.PROMPT_URL);
+  const input = prompt(TEXT_STRINGS.PROMPT_URL);
 
   if (!input) throw new Error(TEXT_STRINGS.INVALID_URL);
   if (!input.startsWith("https://")) throw new Error(TEXT_STRINGS.INSECURE_URL);
